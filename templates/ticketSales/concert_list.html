@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+    {% load static %}
+    <html dir="rtl">
+    <head>
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Expires" CONTENT="-1">
+    <title>لیست کنسرت های موجود</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'ticketSales/css/style.css' %}">
+    </head>
+    <body>
+        <h1>لیست کنسرت ها</h1>
+        <ul>
+            {% if concertlist %}
+                <h2>تعداد کنسرت های موجود : {{ concertcount }}</h2>
+                {% for concert in concertlist %}
+                    <li>{{ concert }}</li>
+                {% endfor %}
+            {% endif %}
+            
+        </ul>
+    </body>
+    </html>
