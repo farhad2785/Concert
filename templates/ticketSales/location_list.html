@@ -1,0 +1,20 @@
+{% extends "ticketSales/layout.html" %}
+
+{% block titlepage %} 
+    لیست سالن ها
+{% endblock%}
+
+{% block mainContent %}
+    {% if locationlist %}
+        {% for location in locationlist %}
+            <div class="col-md-2">
+                <a>
+                    {{ location  }}
+                </a>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+{% endblock%}
+               
+           

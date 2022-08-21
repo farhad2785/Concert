@@ -31,3 +31,12 @@ def concertListView(request):
         'concertcount': concerts.count,
     }
     return render(request,'ticketSales/concert_list.html',context)
+
+
+def locationListView(request):
+
+    locations = models.LocationModel.objects.all()
+    context = {
+        'locationlist': locations,
+    }
+    return render(request,'ticketSales/location_list.html',context)
