@@ -8,7 +8,7 @@
     {% if concertlist %}
         {% for concert in concertlist %}
             <div class="col-md-2">
-                <a>
+                <a href="/ticketSales/concert/{{ concert.id }}">
                     <div class="imageBox">
                         <img src="{{ concert.poster.url }}">
                         {{ concert  }}

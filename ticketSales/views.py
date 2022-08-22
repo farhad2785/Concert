@@ -40,3 +40,13 @@ def locationListView(request):
         'locationlist': locations,
     }
     return render(request,'ticketSales/location_list.html',context)
+
+
+def concertdDtailsView(request, concert_id):
+    concert = models.ConcertModel.objects.get(pk=concert_id)
+    
+    context = {
+        'concertdetails' : concert
+    }
+    print(concert)
+    return render(request,'ticketSales/concert_details.html',context)
