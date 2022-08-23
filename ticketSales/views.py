@@ -50,3 +50,11 @@ def concertdDtailsView(request, concert_id):
     }
     print(concert)
     return render(request,'ticketSales/concert_details.html',context)
+
+
+def timeView(request):
+    times = models.TimeModel.objects.all()
+    context = {
+        'timelist': times,
+    }
+    return render(request,'ticketSales/time_list.html',context)    

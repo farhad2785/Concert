@@ -1,0 +1,38 @@
+{% extends "ticketSales/layout.html" %}
+
+{% block titlepage %} 
+    لیست سانس ها
+{% endblock%}
+
+{% block mainContent %}
+    {% if timelist %}
+        {% for time in timelist %}
+            <div class="col-md-2">
+                <a>
+                    <div class="timeBox">
+                        <h2>{{ time.concert_model.name }}</h2>
+                        <p>{{ time.concert_model.singer_name }}</p>
+                        <p>{{ time.location_model.name }}</p>
+                        <p>{{ time.get_jalali_date }}</p>
+                        <div class="
+                            {% if time.status == 1 %}
+                                btn btn-success
+                            {% elif time.status == 2 %}
+                                btn btn-danger
+                            {% elif time.status == 3 %}
+                                btn default
+                            {% elif time.status == 4 %}
+                                btn btn-primary
+                            {% endif%}
+                            ">
+                            {{ time.get_status_display }}
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+{% endblock%}
+               
+           

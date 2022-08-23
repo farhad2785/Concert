@@ -1,6 +1,6 @@
 from tkinter import CASCADE
 from django.db import models
-
+from jalali_date import datetime2jalali,date2jalali
 # Create your models here.
 
 class ConcertModel(models.Model):
@@ -31,21 +31,21 @@ class LocationModel(models.Model):
         return self.name
 
 class TimeModel(models.Model):
-    concert_name = models.ForeignKey(to=ConcertModel,on_delete=models.PROTECT, verbose_name='کنسرت')
-    # concert_name = models.ForeignKey('ConcertModel',on_delete=models.PROTECT)
-    location_name = models.ForeignKey(to=LocationModel, on_delete=models.PROTECT, verbose_name='محل برگزاری')
+    concert_model = models.ForeignKey(to=ConcertModel,on_delete=models.PROTECT, verbose_name='کنسرت')
+    # concert_model = models.ForeignKey('ConcertModel',on_delete=models.PROTECT)
+    location_model = models.ForeignKey(to=LocationModel, on_delete=models.PROTECT, verbose_name='محل برگزاری')
     start_date_time = models.DateTimeField(verbose_name='تاریخ و ساعت برگزاری')
     seats = models.IntegerField(verbose_name='تعداد صندلی')
 
-    start_s= 1
-    end_s = 2
-    cancel_s = 3
-    sales_s = 4
+    # start_s= 1
+    # end_s = 2
+    # cancel_s = 3
+    # sales_s = 4
     status_choices = (
-                    ('start_s','فروش بلیط شروع شده است'),
-                    ('end_s','فروش بلیط تمام شده است!'),
-                    ('cancel_s','این سانس کنسل شده است'),
-                    ('sales_s','در حال فروش بلیط'),
+                    (1,'فروش بلیط شروع شده است'),
+                    (2,'فروش بلیط تمام شده است!'),
+                    (3,'این سانس کنسل شده است'),
+                    (4,'در حال فروش بلیط'),
                     )
     status = models.IntegerField(choices=status_choices, verbose_name='وضعیت')
 
@@ -54,18 +54,21 @@ class TimeModel(models.Model):
         verbose_name_plural= 'سانس'
 
     def __str__(self) -> str:
-        return f'Time: {start_date_time} Concet Name: {consert_name} Location: {location_name}'
+        return f'Time: {self.start_date_time} Concet Name: {self.concert_model} Location: {self.location_model}'
+
+    def get_jalali_date(self):
+        return datetime2jalali(self.start_date_time)
 
 class ProfileModel(models.Model):
     name = models.CharField(max_length=100, verbose_name='نام')
     family = models.CharField(max_length=100, verbose_name='نام خانوادگی')
     profile_pic = models.ImageField(upload_to='profile_pics', blank=True, verbose_name='عکس نمایه')
 
-    male = 1
-    female = 2
+    # male = 1
+    # female = 2
     gender_choices = (
-        ('male','مرد'),
-        ('female','زن')
+        (1,'مرد'),
+        (2,'زن')
     )
     gender = models.IntegerField(choices= gender_choices, verbose_name='جنسیت')
 
@@ -74,7 +77,7 @@ class ProfileModel(models.Model):
         verbose_name_plural= 'کاربر'
 
     def __str__(self) -> str:
-        return f'Full Name : {name} {family}'
+        return f'Full Name : {self.name} {self.family}'
 
 class TicketModel(models.Model):
     ticket_number = models.IntegerField(null=False, verbose_name='شماره بلیط')
@@ -91,5 +94,5 @@ class TicketModel(models.Model):
 
     def __str__(self) -> str:
         # return f'Ticket Information : \n Number : {ticket_number} \n Profile : {ProfileModel.__str__()} \n Concert Information: \n Singer: {ConcertModel.__str__()} \n Location : {LocationModel.__str__()} \n Time: {TimeModel.__str__()}'
-        return f'Ticket Information : \n Number : {ticket_number} \n Profile : {ProfileModel.__str__()} \n Concert Information: \n Singer: {TimeModel.__str__()}'
+        return f'Ticket Information : \n Number : {self.ticket_number} \n Profile : {ProfileModel.__str__()} \n Concert Information: \n Singer: {TimeModel.__str__()}'
         # return f'Ticket Information : \n Number : {ticket_number} \n Profile : {profile} \n Concert Information: \n Singer: {time}'

@@ -22,7 +22,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ticketSales/concert/list/', views.concertListView),
     path('ticketSales/location/list/', views.locationListView),
-    path('ticketSales/concert/<int:concert_id>', views.concertdDtailsView),
+    path('ticketSales/concert/<int:concert_id>/', views.concertdDtailsView),
+    path('ticketSales/time/list/', views.timeView),
+
 ]
 
 if settings.DEBUG:

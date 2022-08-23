@@ -51,3 +51,16 @@ p{
     border:1px dashed green;
     padding:10px
 }
+
+.timeBox {
+    margin: 5px;
+    background-color: whitesmoke;
+    font-size: 15px;
+    border:1px dashed green;
+    padding:10px;
+    text-align: center
+}
+
+.default {
+    border:1px solid gray;
+}
