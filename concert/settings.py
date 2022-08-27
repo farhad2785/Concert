@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_cleanup',
     'ticketSales.apps.TicketsalesConfig',
     'jalali_date',
+    'accounts.apps.AccountsConfig',
 ]
 
 
@@ -133,9 +134,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'fa-ir'
+# LANGUAGE_CODE = 'fa-ir'
 
-TIME_ZONE = 'Asia/Tehran'
+# TIME_ZONE = 'Asia/Tehran'
+
+LANGUAGE_CODE = 'en-us'
+
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 

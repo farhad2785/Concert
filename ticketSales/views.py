@@ -1,8 +1,10 @@
 from multiprocessing import context
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from urllib import request
 from django.shortcuts import render
 from django.conf import settings
+from django.urls import reverse
+import accounts
 
 import concert
 from . import models
@@ -53,8 +55,12 @@ def concertdDtailsView(request, concert_id):
 
 
 def timeView(request):
-    times = models.TimeModel.objects.all()
-    context = {
-        'timelist': times,
-    }
-    return render(request,'ticketSales/time_list.html',context)    
+
+    if request.user.is_authenticated and request.user.is_active:
+        times = models.TimeModel.objects.all()
+        context = {
+            'timelist': times,
+        }
+        return render(request,'ticketSales/time_list.html',context)   
+    else:
+        return HttpResponseRedirect(reverse(accounts.views.login_view)) 

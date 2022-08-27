@@ -11,6 +11,17 @@
         <link rel="stylesheet" type="text/css" href="{% static 'ticketSales/css/bootstrap.css' %} " >
         <link rel="stylesheet" type="text/css" href="{% static 'ticketSales/css/fontawesome.css' %} " >
         <link rel="stylesheet" type="text/css" href="{% static 'ticketSales/css/style.css' %} " >
+
+        <style>
+            @font-face{
+                font-family: 'IranSanse';
+                src: local('IranSanse'),
+                url('{% static "ticketSales/fonts/eot/IRANSansWeb.eot" %}') format('eot'),
+                url('{% static "ticketSales/fonts/ttf/IRANSansWeb.ttf" %}') format('ttf'),
+                url('{% static "ticketSales/fonts/woff/IRANSansWeb.woff" %}') format('woff'),
+                url('{% static "ticketSales/fonts/woff2/IRANSansWeb.woff2" %}') format('woff2');
+            }
+        </style>
     </head>
     <body>
         <div class="container">
@@ -19,7 +30,8 @@
                 <h1>{% block titlepage %} {% endblock%}</h1>
                 <ul class="btnul">
                     <li><a class="btn btn-success">پروفایل</a></li>
-                    <li><a class="btn btn-primary">صفحه اصلی</a></li>
+                    <li><a class="btn btn-primary" href="/ticketSales/time/list">اطلاعات سانس</a></li>
+                    <li><a class="btn btn-default" href="/ticketSales/concert/list">صفحه اصلی</a></li>
                     <li><a class="btn btn-danger" href="/ticketSales/location/list">اطلاعات محل</a></li>
                 </ul>
             </div>
