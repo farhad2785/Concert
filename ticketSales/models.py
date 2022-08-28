@@ -1,6 +1,7 @@
 from tkinter import CASCADE
 from django.db import models
 from jalali_date import datetime2jalali,date2jalali
+from accounts.models import ProfileModel
 # Create your models here.
 
 class ConcertModel(models.Model):
@@ -59,29 +60,9 @@ class TimeModel(models.Model):
     def get_jalali_date(self):
         return datetime2jalali(self.start_date_time)
 
-class ProfileModel(models.Model):
-    name = models.CharField(max_length=100, verbose_name='نام')
-    family = models.CharField(max_length=100, verbose_name='نام خانوادگی')
-    profile_pic = models.ImageField(upload_to='profile_pics', blank=True, verbose_name='عکس نمایه')
-
-    # male = 1
-    # female = 2
-    gender_choices = (
-        (1,'مرد'),
-        (2,'زن')
-    )
-    gender = models.IntegerField(choices= gender_choices, verbose_name='جنسیت')
-
-    class Meta:
-        # verbose_name = 'کنسرت'
-        verbose_name_plural= 'کاربر'
-
-    def __str__(self) -> str:
-        return f'Full Name : {self.name} {self.family}'
-
 class TicketModel(models.Model):
     ticket_number = models.IntegerField(null=False, verbose_name='شماره بلیط')
-    profile = models.ForeignKey('ProfileModel',on_delete=models.PROTECT, verbose_name='کاربر')
+    profile = models.ForeignKey(ProfileModel,on_delete=models.PROTECT, verbose_name='کاربر')
     ticket_pic = models.ImageField(upload_to='ticket_pics', blank=True, verbose_name='عکس بلیط')
     time = models.ForeignKey('TimeModel',on_delete=models.PROTECT, verbose_name='سانس')
 

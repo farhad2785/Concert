@@ -4,6 +4,5 @@ from . import models
 
 admin.site.register(models.ConcertModel)
 admin.site.register(models.LocationModel)
-admin.site.register(models.ProfileModel)
 admin.site.register(models.TicketModel)
 admin.site.register(models.TimeModel)
