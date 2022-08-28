@@ -8,12 +8,20 @@ from django.urls import reverse
 from accounts.views import login_view
 from django.contrib.auth.decorators import login_required
 # import concert
-from . import models
+from . import models,forms
 
 # Create your views here.
 
 def concertListView(request):
-    concerts = models.ConcertModel.objects.all()
+
+    search_form = forms.SearchFrom(request.GET)
+
+    if search_form.is_valid():
+        search_text = search_form.cleaned_data['search_text']
+        concerts = models.ConcertModel.objects.filter(name__contains=search_text)
+
+    else:
+        concerts = models.ConcertModel.objects.all()
     # text = '''
     # <!DOCTYPE html>
     # <html>
@@ -32,6 +40,7 @@ def concertListView(request):
     context = {
         'concertlist': concerts,
         'concertcount': concerts.count,
+        'search_form' : search_form,
     }
     return render(request,'ticketSales/concert_list.html',context)
 

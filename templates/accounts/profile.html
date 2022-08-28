@@ -5,14 +5,18 @@
 {% endblock%}
 
 {% block mainContent %}
-    <div class="row">
-        <div class="col-md-3">
-            <p></p>
-            <p>نام و نام خانوادگی : {{ profile.user.get_full_name }}</p>  <!--get_short_name-->
-            <p>جنسیت : {{ profile.get_gender_display }}</p>
-            <p>مقدار اعتبار : {{ profile.credit }}</p>
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-8">
+            <div>
+                <p class="border"> <span class="title">نام و نام خانوادگی : </span>{{ profile.user.get_full_name }}</p>  <!--get_short_name-->
+                <p class="border"> <span class="title">جنسیت : </span>{{ profile.get_gender_display }}</p>
+                <p class="border"> <span class="title">مقدار اعتبار : </span>{{ profile.credit }}</p>
+                <ul class="btnul">
+                    <li><a class="btn btn-primary" href="/accounts/edit">ویرایش پروفایل</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="col-md-4">
+        <div class="imageBox" dir="ltr" style="width: 15%;">
             <img src="{{ profile.profile_pic.url }}" alt="تصویر کاربر">
         </div>
     </div>
