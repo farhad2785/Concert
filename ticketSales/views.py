@@ -4,9 +4,10 @@ from urllib import request
 from django.shortcuts import render
 from django.conf import settings
 from django.urls import reverse
-import accounts
-
-import concert
+# import accounts
+from accounts.views import login_view
+from django.contrib.auth.decorators import login_required
+# import concert
 from . import models
 
 # Create your views here.
@@ -35,6 +36,7 @@ def concertListView(request):
     return render(request,'ticketSales/concert_list.html',context)
 
 
+@login_required
 def locationListView(request):
 
     locations = models.LocationModel.objects.all()
@@ -53,14 +55,14 @@ def concertdDtailsView(request, concert_id):
     print(concert)
     return render(request,'ticketSales/concert_details.html',context)
 
-
+@login_required
 def timeView(request):
 
-    if request.user.is_authenticated and request.user.is_active:
-        times = models.TimeModel.objects.all()
-        context = {
-            'timelist': times,
-        }
-        return render(request,'ticketSales/time_list.html',context)   
-    else:
-        return HttpResponseRedirect(reverse(accounts.views.login_view)) 
+    # if request.user.is_authenticated and request.user.is_active:
+    times = models.TimeModel.objects.all()
+    context = {
+        'timelist': times,
+    }
+    return render(request,'ticketSales/time_list.html',context)   
+    # else:
+    #     return HttpResponseRedirect(reverse(accounts.views.login_view)) 

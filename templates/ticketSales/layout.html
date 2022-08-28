@@ -29,7 +29,16 @@
                
                 <h1>{% block titlepage %} {% endblock%}</h1>
                 <ul class="btnul">
-                    <li><a class="btn btn-success">پروفایل</a></li>
+
+                    {% if user.is_authenticated %}
+                        <li><a class="btn btn-danger" href="/accounts/logout">خروج</a></li>
+                    {% else %}
+                        <li><a class="btn btn-success" href="/accounts/login">ورود</a></li>
+                    {% endif %}
+                    
+                    
+
+
                     <li><a class="btn btn-primary" href="/ticketSales/time/list">اطلاعات سانس</a></li>
                     <li><a class="btn btn-default" href="/ticketSales/concert/list">صفحه اصلی</a></li>
                     <li><a class="btn btn-danger" href="/ticketSales/location/list">اطلاعات محل</a></li>

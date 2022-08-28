@@ -156,6 +156,9 @@ STATIC_ROOT = os.path.join(BASE_DIR,'static')
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
+LOGIN_URL = '/accounts/login/'  #به صورت پیش فرض اگر نام اچ تی ام ال ورود همین باشد نیاز به این خط نیست
+LOGIN_REDIRECT_URL = '/ticketSales/concert/list'   # صفحه پیش فرض ریدایرکت - اگر در کد از صفحه ای وارد لاگین نشده باشیم
+
 # STATICFILES_DIRS = [
 #     BASE_DIR / "static",
 # ]
