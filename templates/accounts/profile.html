@@ -1,0 +1,19 @@
+{% extends "ticketSales/layout.html" %}
+
+{% block titlepage %} 
+    پروفایل کاربری  {{concertdetails.name}}
+{% endblock%}
+
+{% block mainContent %}
+    <div class="row">
+        <div class="col-md-3">
+            <p></p>
+            <p>نام و نام خانوادگی : {{ profile.user.get_full_name }}</p>  <!--get_short_name-->
+            <p>جنسیت : {{ profile.get_gender_display }}</p>
+            <p>مقدار اعتبار : {{ profile.credit }}</p>
+        </div>
+        <div class="col-md-4">
+            <img src="{{ profile.profile_pic.url }}" alt="تصویر کاربر">
+        </div>
+    </div>
+{% endblock %}

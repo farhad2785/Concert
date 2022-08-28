@@ -6,16 +6,16 @@ from django.contrib.auth.models import User
 
 class ProfileModel(models.Model):
 
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
-    name = models.CharField(max_length=100, verbose_name='نام')
-    family = models.CharField(max_length=100, verbose_name='نام خانوادگی')
+    user = models.OneToOneField(User,on_delete=models.CASCADE, verbose_name='کاربری', related_name='profile')
+    # name = models.CharField(max_length=100, verbose_name='نام')                   # وفتی خط بالا انجام شود چون حالت پیش فرض در آن نام و نام خانوادگی می باشد نیاز به تعریف این دو نیست
+    # family = models.CharField(max_length=100, verbose_name='نام خانوادگی')
     profile_pic = models.ImageField(upload_to='profile_pics', blank=True, verbose_name='عکس نمایه')
 
     # male = 1
     # female = 2
     # gender_choices = (
-    #     ('male','مرد'),
-    #     ('female','زن')
+    #     (male,'مرد'),
+    #     (female,'زن')
     # )
     gender_choices = (
         (1,'مرد'),
@@ -29,5 +29,5 @@ class ProfileModel(models.Model):
         # verbose_name = 'کنسرت'
         verbose_name_plural= 'کاربر'
 
-    def __str__(self) -> str:
-        return f'Full Name : {self.name} {self.family}'
+    # def __str__(self) -> str:
+    #     return f'Full Name : {self.name} {self.family}'

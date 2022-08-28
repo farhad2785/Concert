@@ -1,9 +1,11 @@
+import re
 from django.urls import reverse
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth import authenticate,login,logout
 import ticketSales
 from concert import settings
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -30,3 +32,12 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse(ticketSales.views.concertListView))
+
+@login_required
+def profile_view(request):
+    profile = request.user.profile
+    context = {
+        'profile' : profile
+    }
+
+    return render(request,'accounts/profile.html',context)
