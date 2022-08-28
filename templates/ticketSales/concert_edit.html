@@ -1,0 +1,32 @@
+{% extends "ticketSales/layout.html" %}
+
+{% block titlepage %} 
+    ویرایش کنسرت
+{% endblock%}
+
+{% block mainContent %}
+<form action="" method="POST" enctype="multipart/form-data"> <!--جهت ذخیره هر فایل در فرم-->
+    {% csrf_token %}
+    <!-- {{concert_form}} -->
+    <div class="mainborder">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="mylable">نام کنسرت : {{concert_form.name}}</p>
+                <p class="mylable">نام خواننده : {{concert_form.singer_name}}</p>
+                <p class="mylable">مدت زمان کنسرت : {{concert_form.lenght}}</p>
+            </div>
+            <div class="col-md-6">
+                <div class="imageBox">
+                    <img src="{{poster_image.url}}">
+                </div>
+                {{ concert_form.poster }}
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">ذخیره</button>
+</form>
+
+
+{% endblock%}
+               
+           

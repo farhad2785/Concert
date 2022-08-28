@@ -9,6 +9,7 @@ from accounts.views import login_view
 from django.contrib.auth.decorators import login_required
 # import concert
 from . import models,forms
+import ticketSales
 
 # Create your views here.
 
@@ -55,6 +56,8 @@ def locationListView(request):
     return render(request,'ticketSales/location_list.html',context)
 
 
+
+
 def concertdDtailsView(request, concert_id):
     concert = models.ConcertModel.objects.get(pk=concert_id)
     
@@ -63,6 +66,8 @@ def concertdDtailsView(request, concert_id):
     }
     print(concert)
     return render(request,'ticketSales/concert_details.html',context)
+
+
 
 @login_required
 def timeView(request):
@@ -75,3 +80,24 @@ def timeView(request):
     return render(request,'ticketSales/time_list.html',context)   
     # else:
     #     return HttpResponseRedirect(reverse(accounts.views.login_view)) 
+
+
+
+def concertEditView(request,concert_id):
+
+    concert = models.ConcertModel.objects.get(pk=concert_id)
+
+    if request.method=='POST':
+        concert_form = forms.ConcerForm(request.POST, request.FILES, instance=concert)
+        if concert_form.is_valid:
+            concert_form.save()
+            return HttpResponseRedirect(reverse(ticketSales.views.concertListView))
+    else:
+        concert_form = forms.ConcerForm(instance=concert)
+
+    
+    context = {
+        'concert_form': concert_form,
+        'poster_image' : concert.poster
+    }
+    return render(request,'ticketSales/concert_edit.html',context)
