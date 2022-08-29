@@ -1,0 +1,38 @@
+{% extends "ticketSales/layout.html" %}
+
+{% block titlepage %} 
+    فرم ویرایش کاربر
+{% endblock%}
+
+{% block mainContent %}
+<form action="" method="POST" enctype="multipart/form-data"> <!--جهت ذخیره هر فایل در فرم-->
+    {% csrf_token %}
+    <!-- {{userEditForm}} -->
+    <div class="mainborder">
+        <div class="row">
+            <div class="col-md-10">
+                <div>
+                    <p class="border"> <span class="title">نام : {{userEditForm.first_name}}</span></p>
+                    <p class="border"> <span class="title">نام خانوادگی : {{userEditForm.last_name}}</span></p>
+                    <p class="border"> <span class="title">پست الکترونیکی : {{userEditForm.email}}</span></p>
+                    <p class="border"> <span class="title">جنسیت : {{profileEditForm.gender}}</span></p>
+                    <p class="border"> <span class="title">مقدار اعتبار کیف پول : {{profileEditForm.credit}}</span></p>
+                </div>
+            </div>
+            <!-- <div class="col-md-6">
+                
+                <p class="mylable">نام کاربری : {{form_data.username}}</p>
+                <p class="mylable">رمز عبور : {{form_data.password}}</p>
+                {{form_data.profile_pic}}                
+            </div> -->
+            <div class="col-md-2">
+                <div class="imageBox">
+                    <img src="{{profile_pic.url}}">
+                </div>
+                {{ profileEditForm.profile_pic }} 
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">ذخیره</button>
+</form>
+{% endblock%}

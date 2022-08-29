@@ -2,7 +2,7 @@ from django.urls import reverse
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth import authenticate,login,logout
-from accounts.models import ProfileModel
+from accounts import models,views
 import ticketSales
 from concert import settings
 from django.contrib.auth.decorators import login_required
@@ -56,7 +56,7 @@ def registerView(request):
                                             last_name= registerForm.cleaned_data['last_name']
                                             )
             user.save()
-            profileModel= ProfileModel(user=user, profile_pic= registerForm.cleaned_data['profile_pic'],
+            profileModel= models.ProfileModel(user=user, profile_pic= registerForm.cleaned_data['profile_pic'],
                                         gender= registerForm.cleaned_data['gender'],
                                         credit= registerForm.cleaned_data['credit'],
                                          )
@@ -68,3 +68,23 @@ def registerView(request):
     'form_data' : registerForm
     }
     return render(request,'accounts/register.html',context)
+
+
+def profileEditView(request):
+    if request.method == 'POST':
+        profileEditForm= forms.ProfileEditForm(request.POST, request.FILES, instance=request.user.profile)
+        userEditForm= forms.UserEditForm(request.POST, instance= request.user)
+        if profileEditForm.is_valid and userEditForm.is_valid:
+            profileEditForm.save()
+            userEditForm.save()
+            return HttpResponseRedirect(reverse(views.profile_view))
+    else:
+        profileEditForm= forms.ProfileEditForm(instance=request.user.profile)
+        userEditForm= forms.UserEditForm(instance= request.user)
+    
+    context = {
+        'profileEditForm' : profileEditForm,
+        'userEditForm' : userEditForm,
+        'profile_pic' : request.user.profile.profile_pic
+    }
+    return render(request,'accounts/profile_edit.html',context)
