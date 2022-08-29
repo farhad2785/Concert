@@ -1,11 +1,13 @@
-import re
 from django.urls import reverse
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth import authenticate,login,logout
+from accounts.models import ProfileModel
 import ticketSales
 from concert import settings
 from django.contrib.auth.decorators import login_required
+from . import forms
+from django.contrib.auth.models import User
 # Create your views here.
 
 
@@ -41,3 +43,28 @@ def profile_view(request):
     }
 
     return render(request,'accounts/profile.html',context)
+
+def registerView(request):
+    
+    if request.method=='POST':
+        registerForm = forms.RegisterForm(request.POST, request.FILES) #, instance=concert)
+        if registerForm.is_valid():
+            user = User.objects.create_user(username= registerForm.cleaned_data['username'],
+                                            email= registerForm.cleaned_data['email'],
+                                            password= registerForm.cleaned_data['password'],
+                                            first_name= registerForm.cleaned_data['first_name'],
+                                            last_name= registerForm.cleaned_data['last_name']
+                                            )
+            user.save()
+            profileModel= ProfileModel(user=user, profile_pic= registerForm.cleaned_data['profile_pic'],
+                                        gender= registerForm.cleaned_data['gender'],
+                                        credit= registerForm.cleaned_data['credit'],
+                                         )
+            profileModel.save()
+            return HttpResponseRedirect(reverse(ticketSales.views.concertListView))
+    else:
+        registerForm = forms.RegisterForm()
+    context = {
+    'form_data' : registerForm
+    }
+    return render(request,'accounts/register.html',context)

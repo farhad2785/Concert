@@ -1,0 +1,34 @@
+{% extends "ticketSales/layout.html" %}
+
+{% block titlepage %} 
+    فرم ثبت نام
+{% endblock%}
+
+{% block mainContent %}
+<form action="" method="POST" enctype="multipart/form-data"> <!--جهت ذخیره هر فایل در فرم-->
+    {% csrf_token %}
+    <div class="mainborder">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="mylable">نام : {{form_data.first_name}}</p>
+                <p class="mylable">نام خانوادگی : {{form_data.last_name}}</p>
+                <p class="mylable">جنسیت : {{form_data.gender}}</p>
+                <p class="mylable">مقدار اعتبار کیف پول : {{form_data.credit}}</p>
+            </div>
+            <div class="col-md-6">
+                <p class="mylable">پست الکترونیکی : {{form_data.email}}</p>
+                <p class="mylable">نام کاربری : {{form_data.username}}</p>
+                <p class="mylable">رمز عبور : {{form_data.password}}</p>
+                {{form_data.profile_pic}}                
+            </div>
+            <!-- <div class="col-md-6">
+                <div class="imageBox">
+                    <img src="{{poster_image.url}}">
+                </div>
+                {{ concert_form.poster }} 
+            </div> -->
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">ذخیره</button>
+</form>
+{% endblock%}
