@@ -26,8 +26,8 @@ SECRET_KEY = 'django-insecure-1_#mtjg=ddt96b#*prv@jrsu!ax*)pwf45v28r@680jn^@#hz%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['concert.davoodjafari.ir']
+# ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -134,13 +134,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-# LANGUAGE_CODE = 'fa-ir'
+LANGUAGE_CODE = 'fa-ir'
 
-# TIME_ZONE = 'Asia/Tehran'
+TIME_ZONE = 'Asia/Tehran'
 
-LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -168,3 +168,6 @@ LOGIN_REDIRECT_URL = '/ticketSales/concert/list'   # صفحه پیش فرض ری
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+GOOGLE_RECAPTCHA_SITE_KEY = '6LfZ2ukhAAAAACuawy1rGBg0HXYIBzVzVv0oc33Q'
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LfZ2ukhAAAAAMakQ8oQCYPtCHvnmAktz4qT6Kmc'
