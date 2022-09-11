@@ -26,8 +26,8 @@ SECRET_KEY = 'django-insecure-1_#mtjg=ddt96b#*prv@jrsu!ax*)pwf45v28r@680jn^@#hz%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['concert.davoodjafari.ir']
-# ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['concert.davoodjafari.ir']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -169,5 +169,10 @@ LOGIN_REDIRECT_URL = '/ticketSales/concert/list'   # صفحه پیش فرض ری
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-GOOGLE_RECAPTCHA_SITE_KEY = '6LfZ2ukhAAAAACuawy1rGBg0HXYIBzVzVv0oc33Q'
-GOOGLE_RECAPTCHA_SECRET_KEY = '6LfZ2ukhAAAAAMakQ8oQCYPtCHvnmAktz4qT6Kmc'
+# for davood.jafari.ir
+# GOOGLE_RECAPTCHA_SITE_KEY = '6LfZ2ukhAAAAACuawy1rGBg0HXYIBzVzVv0oc33Q'
+# GOOGLE_RECAPTCHA_SECRET_KEY = '6LfZ2ukhAAAAAMakQ8oQCYPtCHvnmAktz4qT6Kmc'
+
+#for localhost
+GOOGLE_RECAPTCHA_SITE_KEY = '6LeYm-whAAAAAEyjedZ-LgDJPChNjXb3zdmZue6N'
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LeYm-whAAAAAJhCbwcDHaBQrLQZHTj-eSF2Uo4F'
