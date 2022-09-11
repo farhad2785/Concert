@@ -8,8 +8,28 @@ from concert import settings
 from django.contrib.auth.decorators import login_required
 from . import forms
 from django.contrib.auth.models import User
+import json
+import urllib
+
+
 # Create your views here.
 
+def recaptcha_isvalid(request):
+    recaptcha_response = request.POST.get('g-recaptcha-response')
+    url = 'https://www.google.com/recaptcha/api/siteverify'
+    values = {
+        'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+        'response': recaptcha_response
+    }
+    data = urllib.parse.urlencode(values).encode()
+    req =  urllib.request.Request(url, data=data)
+    response = urllib.request.urlopen(req)
+    result = json.loads(response.read().decode())
+            
+    if result['success']:
+        return True
+    else:
+        return False
 
 def login_view(request):
     if request.method=='POST':
@@ -17,11 +37,17 @@ def login_view(request):
         password = request.POST.get('password')
         user = authenticate(request,username=username,password=password)
         if user is not None:
-            login(request,user)
-            if request.GET.get('next'):
-                return HttpResponseRedirect(request.GET.get('next'))
+            if recaptcha_isvalid(request):
+                login(request,user)
+                if request.GET.get('next'):
+                    return HttpResponseRedirect(request.GET.get('next'))
+                else:
+                    return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
             else:
-                return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+                context = {
+                'errorMessage' : 'Invalid reCAPTCHA. Please try again.!'
+                }
+                return render(request,'accounts/login.html',context)
         else:
             context = {
                 'username' : username,
@@ -49,19 +75,26 @@ def registerView(request):
     if request.method=='POST':
         registerForm = forms.RegisterForm(request.POST, request.FILES) #, instance=concert)
         if registerForm.is_valid():
-            user = User.objects.create_user(username= registerForm.cleaned_data['username'],
-                                            email= registerForm.cleaned_data['email'],
-                                            password= registerForm.cleaned_data['password'],
-                                            first_name= registerForm.cleaned_data['first_name'],
-                                            last_name= registerForm.cleaned_data['last_name']
-                                            )
-            user.save()
-            profileModel= models.ProfileModel(user=user, profile_pic= registerForm.cleaned_data['profile_pic'],
-                                        gender= registerForm.cleaned_data['gender'],
-                                        credit= registerForm.cleaned_data['credit'],
-                                         )
-            profileModel.save()
-            return HttpResponseRedirect(reverse(ticketSales.views.concertListView))
+            if recaptcha_isvalid(request):
+                user = User.objects.create_user(username= registerForm.cleaned_data['username'],
+                                                email= registerForm.cleaned_data['email'],
+                                                password= registerForm.cleaned_data['password'],
+                                                first_name= registerForm.cleaned_data['first_name'],
+                                                last_name= registerForm.cleaned_data['last_name']
+                                                )
+                user.save()
+                profileModel= models.ProfileModel(user=user, profile_pic= registerForm.cleaned_data['profile_pic'],
+                                            gender= registerForm.cleaned_data['gender'],
+                                            credit= registerForm.cleaned_data['credit'],
+                                             )
+                profileModel.save()
+                return HttpResponseRedirect(reverse(ticketSales.views.concertListView))
+            else:
+                context = {
+                    'form_data' : registerForm,
+                    'errorMessage' : 'Invalid reCAPTCHA. Please try again.!'
+                    }
+                return render(request,'accounts/register.html',context)
     else:
         registerForm = forms.RegisterForm()
     context = {
