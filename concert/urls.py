@@ -22,6 +22,7 @@ from ticketSales import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('ticketSales.urls')),
     path('ticketSales/', include('ticketSales.urls')),
     path('accounts/', include('accounts.urls')),
 
